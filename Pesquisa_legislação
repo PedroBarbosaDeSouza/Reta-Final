@@ -4,5 +4,19 @@ TÍTULO 3 / CAPÍTULO 2 / Art. 63 - É obrigatória a acessibilidade em sítios 
 § 1º Os sítios devem conter símbolo de acessibilidade em destaque.
 
 ***Normas de Acessibilidade ABNT***
+(https://www.abntcolecao.com.br/mpf/norma.aspx?ID=567818#)
+OBRIGATÓRIOS
+- Interação só pelo teclado tem que ser possível
+   *Indicador de foco visível (ressalta o botão quando passa o mouse em cima
+   * Elementos minimamente focáveis (botão essencial pode ser usado usando tab)
+   * Todo elemento focável precisa ser interagível e segue um ordem lógica (que faça sentido)
+   * Não utilizar teclas modificadoras (por exemplo, Control + Alt + F4. Não usar mais de uma tecla)
+- Imagens
+   * Texto alternativo para todos os tipos de imagens, com exceção das decorativas que não podem ter nenhum
+   * Descrição de imagens complexas
+- Cabeçalho
+   * Único cabeçalho principal obrigatório para separar seções de conteúdo, com semântica determinada
+   * Todos os outros cabeçalhos seguem uma lógica estritamente hierárquica
+- Regiões
 
-TEMPO: 37min (por enquanto)
+TEMPO: 1h07min (por enquanto)
