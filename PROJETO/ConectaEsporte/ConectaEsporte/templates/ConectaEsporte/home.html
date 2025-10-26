@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal</title>
+
+    <!-- limpa os dados mock de conta sempre que a página for aberta (preview) -->
+    <script>
+        (function () {
+            try {
+                localStorage.removeItem('mock_users'); // remove apenas a chave dos usuários mock
+            } catch (err) {
+                // silencia erros (ex.: ambiente sem localStorage)
+                console.warn('Não foi possível limpar localStorage:', err);
+            }
+        })();
+    </script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'secundarios:mapa' %}">Mapa Interativo</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>ConectaEsporte</h1>
+        <h2></h2>
+        <h2><a href="{% url 'secundarios:mapa' %}">Acesse nosso mapa interativo!</a></h2>
+        <h2>Lembre-se de <a href="{% url 'secundarios:login' %}">entrar na sua conta </a>para ter acesso às comunidades!</h2>
+
+    </main>
+    <footer>
+
+    </footer>
+</body>
+</html>
