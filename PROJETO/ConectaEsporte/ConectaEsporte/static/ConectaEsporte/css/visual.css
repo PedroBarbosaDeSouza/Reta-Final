@@ -1,0 +1,83 @@
+.corpo{
+  margin: 0 auto; 
+  width: 75em;
+
+}
+
+
+
+.main_busca{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto; 
+  width: 75em;
+  height: 24em;
+
+  background-color: orange;
+
+}
+
+.botoes{
+  display: flex;  
+  justify-content: space-evenly;
+
+  margin: 5em auto;
+}
+
+.texto{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background-color:ghostwhite;
+  margin: 0 auto; 
+  width: 75em;
+  height: 24em;
+    
+}
+
+h2{
+  font-family: "Georgia", serif; /* Sets the font family */
+  font-size: 3em; /* Sets the font size (e.g., 3 times the base font size) */
+  /*font-weight: bold; /* Sets the font weight */
+  /*font-style: italic;  Sets the font style (e.g., italic, normal, oblique) */
+  color: #c03535; /* Sets the text color using a hexadecimal code */
+}
+
+/*
+img{
+  border-radius: 3em;
+}
+*/
+
+.novidade{
+  display:flex;
+  flex-direction: column;
+
+  background-color: ghostwhite;
+  
+  
+}
+.sugestao{
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content:space-evenly;
+}
+
+.c1{
+  display: flex;
+  
+
+  background-color: antiquewhite;
+  margin: 1em;
+}
+
+.t1{
+  margin:1em 0em 0em 1em;
+  font-size: 2em;
+}
