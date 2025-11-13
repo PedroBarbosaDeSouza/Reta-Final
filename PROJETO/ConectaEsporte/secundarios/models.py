@@ -88,3 +88,16 @@ class Resposta(models.Model):
     
     def __str__(self):
         return f"Resposta de {self.autor.email} em {self.post}"
+
+class SearchLog(models.Model):
+    " Registra as buscas feitas pelos usuários no mapa, pra ser aplicado na barra de progreso"
+    usuario = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='search_logs')
+    termo = models.CharField(max_length=200, blank=True)
+    tipo = models.CharField(max_length=100, blank=True)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-criado_em']
+    
+    def __str__(self):
+        return f"{self.usuario or 'anon'} - {self.tipo or self.termo or 'busca'}"

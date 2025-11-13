@@ -3,8 +3,8 @@ from django.contrib.auth import login
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.db.models import Q
-from .models import Place, Post, Resposta
+from django.db.models import Q, Count
+from .models import Place, Post, Resposta, SearchLog
 
 # Views de cada página secundária
 def criaConta_view(request):
@@ -19,7 +19,8 @@ def criaConta_view(request):
     return render(request, 'secundarios/criaConta.html', {'form': form})
 
 def feed_view(request):
-    return render(request, 'secundarios/feed.html')
+    posts = Post.objects.select_related('autor').all()
+    return render(request, 'secundarios/feed.html', {'posts': posts})
 
 def home_conta_view(request):
     return render(request, 'secundarios/home_conta.html')
@@ -32,43 +33,44 @@ def mapa_view(request):
 
 @login_required
 def perfil_view(request):
-    return render(request, 'secundarios/perfil.html')
+    user = request.user
 
-<<<<<<< HEAD
-def places_api(request):
-    "retorna JSON com base no nome, filtros e se está aberto"
-    qs = Place.objects.filter(ativo=True)
-    q = request.GET.get('q')
-    tipo = request.GET.get('tipo')
-    ativo = request.GET.get('ativo')
+    tipos_distintos = SearchLog.objects.filter(usuario=user).exclude(tipo='').values_list('tipo', flat=True).distinct()
+    tipos_count = tipos_distintos.count()
 
-    if q:
-        qs = qs.filter(Q(nome__icontains=q) | Q(descricao__icontains=q) | Q(endereco__icontains=q))
-    if tipo:
-        qs = qs.filter(tipo=tipo)
-    if ativo in ('0', '1'):
-        qs = qs.filter(ativo=(ativo == '1'))
+    buscas_totais = SearchLog.objects.filter(usuario=user).count()
+
+    posts_count = Posts.objects.filter(autor=user).count()
+
+    respostas_count = Resposta.oobjects.filter(autor=user).count()
+
+"Esses valores são só um palpite do que poderia ser as metas"
+    META_TIPOS = 10
+    META_POSTS = 5
+    META_RESPOSTAS = 20
+
+    def pct(count, meta):
+        if meta <= 0:
+            return 0
+        value = int((count / meta) * 100)
+        return 100 if value > 100 else value
     
-    qs = qs[:1000]
+    context = {
+        'tipos_count': tipos_count,
+        'buscas_totais': buscas_totais,
+        'posts_count': posts_count,
+        'respostas_count': respostas_count,
+        'pct_tipos': pct(tipos_count, META_TIPOS),
+        'pct_posts': pct(posts_count, META_POSTS),
+        'pct_respostas': pct(respostas_count, META_RESPOSTAS),
+        'META_TIPOS': META_TIPOS,
+        'META_POSTS': META_POSTS,
+        'META_RESPOSTAS': META_RESPOSTAS,
+    }
+    
+    return render(request, 'secundarios/perfil.html', context)
 
-    data = []
-    for p in qs:
-        data.append({
-            'id':p.id,
-            'nome':p.nome,
-            'descricao':p.descricao,
-            'endereco':p.endereco,
-            'lat':float(p.latitude),
-            'lng':float(p.longitude),
-            'tipo':p.tipo,
-        })
-    return JsonResponse({'results':data})
-
-def feed_view(request):
-    posts = Post.objects.select_related('autor').all()
-    return render(request, 'secundarios/feed.html', {'posts': posts})
-
-def post_view(request, post_id):
+def post_view(request):
     post = get_object_or_404(Post, id=post_id)
     respostas = post.respostas.select_related('autor').all()
 
@@ -81,16 +83,39 @@ def post_view(request, post_id):
             return redirect('secundarios:post', post_id=post.id)
     return render(request, 'secundarios/post.html', {'post': post, 'respostas': respostas})
 
-@login_required
 def novo_post_view(request):
     if request.method == 'POST':
         titulo = request.POST.get('titulo')
         conteudo = request.POST.get('conteudo')
+
         if titulo and conteudo:
-            Post.objects.create(autor=request.user, titulo=titulo, conteudo=conteudo)
-            return redirect('secundarios:feed')
-    return render(request, 'secundarios/novo_post.html')  "Ainda não existe novo_post.html"
-=======
-def post_view(request):
-    return render(request, 'secundarios/post.html')
->>>>>>> 6c7c68a4d1cce974ea0930d3106830beec5f032e
+            post = Post.objects.create(autor=request.user, titulo=titulo, conteudo=conteudo)
+            return redirect('secundarios:post')
+    return render(request, 'secundarios/novo_post.html')
+
+def places_api(request):
+    qs = Place.objects.filter(ativo=True)
+    q = request.GET.get('q')
+    tipo = request.GET.get('tipo')
+    ativo = request.GET.get('ativo')
+
+    if q or tipo:
+        if request.user.is_authenticated:
+            SearchLog.objects.create(usuario=request.user, termo=q or '', tipo=tipo or '')
+    if ativo in ('0', '1'):
+        qs = qs.filter(ativo=(ativo == '1'))
+    
+    qs = qs[:1000]
+
+    data = []
+    for p in qs:
+        data.append({
+            'id': p.id,
+            'nome': p.nome,
+            'descricao': p.descricao,
+            'endereco': p.endereco,
+            'lat': float(p.latitude),
+            'lng': float(p.longitude),
+            'tipo': p.tipo,
+        })
+    return JsonResponse({'results': data})
