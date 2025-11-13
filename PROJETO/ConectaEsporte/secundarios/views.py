@@ -7,11 +7,6 @@ from django.db.models import Q
 from .models import Place, Post, Resposta
 
 # Views de cada página secundária
-def mapa_view(request):
-    return render(request, 'secundarios/mapa.html')
-def login_view(request):
-    return render(request, 'secundarios/login.html')
-
 def criaConta_view(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -23,10 +18,23 @@ def criaConta_view(request):
         form = SignUpForm()
     return render(request, 'secundarios/criaConta.html', {'form': form})
 
+def feed_view(request):
+    return render(request, 'secundarios/feed.html')
+
+def home_conta_view(request):
+    return render(request, 'secundarios/home_conta.html')
+
+def login_view(request):
+    return render(request, 'secundarios/login.html')
+
+def mapa_view(request):
+    return render(request, 'secundarios/mapa.html')
+
 @login_required
 def perfil_view(request):
     return render(request, 'secundarios/perfil.html')
 
+<<<<<<< HEAD
 def places_api(request):
     "retorna JSON com base no nome, filtros e se está aberto"
     qs = Place.objects.filter(ativo=True)
@@ -82,3 +90,7 @@ def novo_post_view(request):
             Post.objects.create(autor=request.user, titulo=titulo, conteudo=conteudo)
             return redirect('secundarios:feed')
     return render(request, 'secundarios/novo_post.html')  "Ainda não existe novo_post.html"
+=======
+def post_view(request):
+    return render(request, 'secundarios/post.html')
+>>>>>>> 6c7c68a4d1cce974ea0930d3106830beec5f032e

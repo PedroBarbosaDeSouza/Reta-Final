@@ -10,8 +10,4 @@ urlpatterns = [
     path('profile/', views.perfil_view, name='perfil'),
     path('login/', auth_views.LoginView.as_view(template_name='secundarios/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('api/places/', views.places_api, name='places_api'),
-    path('feed/', views.feed_view, name='feed'),
-    path('post/<int:post_id>/', views.post_view, name='post'),
-    path('novo_post/', views.novo_post_view, name='novo_post'),
 ]
