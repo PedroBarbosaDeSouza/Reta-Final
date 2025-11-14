@@ -1,0 +1,13 @@
+{% extends 'ConectaEsporte/landing_page.html' %}
+{% load static %}
+{% block content %}
+<h2>Novo Post</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="titulo" placeholder="Título do Post" required><br><br>
+    <textarea name="conteudo" rows="5" placeholder="Escreva seu post aqui..." required></textarea><br><br>
+    <button type="submit">Publicar</button>
+</form>
+
+<p><a href="{% url 'secundarios:feed' %}">&larr; Voltar ao Feed</a></p>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import User
+from .models import User, Post, Resposta
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -50,5 +50,14 @@ class UserAdmin(BaseUserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'autor', 'criado_em')
+    search_fields = ('titulo', 'conteudo')
+
+@admin.register(Resposta)
+class RespostaAdmin(admin.ModelAdmin):
+    list_display = ('post', 'autor', 'criado_em')
 
 admin.site.register(User, UserAdmin)
