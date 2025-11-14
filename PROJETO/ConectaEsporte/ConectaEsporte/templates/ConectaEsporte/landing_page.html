@@ -9,8 +9,8 @@
     <!--
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 -->
-    <link rel="stylesheet" href="{ % static 'secundarios/css/nav.css' % }">
-    <link rel="stylesheet" href="{ % static 'secundarios/css/visual.css' % }">
+    <link rel="stylesheet" href="{% static 'ConectaEsporte/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'ConectaEsporte/css/visual.css' %}">
 
 </head>
 
@@ -20,7 +20,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
   <!-- logo -->
-  <a class="navbar-brand" href="#"><img src="img/Logo_Proj.png" alt="" style="width: 8em;height: 2.75em;"></a>
+  <a class="navbar-brand" href="#"><img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" alt="" style="width: 8em;height: 2.75em;"></a>
 
   <!-- botão menu para telefone -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,8 +51,8 @@
 
   <!-- botões de login -->
     <div class = "login">
-      <a href= "{%url 'secundarios:login' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Entrar</a>
-      <a href="{% url 'secundarios:criaConta'%}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Cadastre-se</a>
+      <a href="{% url 'secundarios:login' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Entrar</a>
+      <a href="{% url 'secundarios:criaConta' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Cadastre-se</a>
     </div>
 
     
@@ -81,17 +81,17 @@
 <!-- botões páginas -->
 <div class= "botoes">
 
-    <a href="#"><img src="{ % static 'secundarios/img/bot_comunidade.jpg' %}" alt="Comunidades" style="width:25em;height:25em;"></a>
+    <a href="{% url 'secundarios:feed' %}"><img src="{% static 'secundarios/img/bot_comunidade.jpg' %}" alt="Comunidades" style="width:25em;height:25em;"></a>
 
-    <a href="#"><img src="{ % static 'secundarios/img/bot_mapa.jpg' %}" alt="Locais" style="width:25em;height:25em;"></a>
+    <a href="{% url 'secundarios:mapa' %}"><img src="{% static 'secundarios/img/bot_mapa.jpg' %}" alt="Locais" style="width:25em;height:25em;"></a>
 
 </div>
 
 <div class= "texto">
 <h2 class= "convite">Inscreva-se já!</h2>
 <div>
-  <a href="{ % url 'secundarios:login' % }" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a>
-  <a href="{ % url 'secundarios:criaConta' % }" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Crie sua conta</a>
+  <a href="{% url 'secundarios:login' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Login</a>
+  <a href="{% url 'secundarios:criaConta' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Crie sua conta</a>
 </div>
 
 
