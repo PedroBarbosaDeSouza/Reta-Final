@@ -1,0 +1,38 @@
+.c2
+{
+    display: flex;
+    flex-direction: collumn;
+    display : grid;
+
+    height: 10em;
+    width: 90%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: antiquewhite;
+    margin-left: 3%;
+    
+}
+
+.conteudo
+{
+    margin-left: 3%;
+}
+
+
+.c2-nome
+{
+    display: flex;
+    align-items: center;
+    
+}
+
+.conversas
+{
+    display: flex;
+    flex-direction: column;
+    marign: 0 auto;
+    width: 75em;
+    background-color: ghostwhite;
+}
+

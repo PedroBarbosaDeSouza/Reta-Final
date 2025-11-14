@@ -20,8 +20,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
   <!-- logo -->
-  <a class="navbar-brand" href="#"><img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" alt="" style="width: 8em;height: 2.75em;"></a>
-
+  <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" alt="" style="width: 8em;height: 2.75em;"></a>
   <!-- botão menu para telefone -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -101,6 +100,7 @@
 </body>
 
 <footer>
+  <a href="{% url 'secundarios:home_conta' %}">página logado</a>
   redes sociais
   doações
 </footer>
