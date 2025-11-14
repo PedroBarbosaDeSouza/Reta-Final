@@ -69,16 +69,6 @@ img{
   justify-content:space-evenly;
 }
 
-.c1{ /*container de um post na sugestão*/
-  display: flex;
-  
-
-  background-color: antiquewhite;
-  margin: 1em;
-}
-
-
-
 .t1{/* texto "Novidades */
   margin:1em 0em 0em 1em;
   font-size: 2em;
