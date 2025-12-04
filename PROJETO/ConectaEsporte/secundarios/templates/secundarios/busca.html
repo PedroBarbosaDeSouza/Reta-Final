@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Conecta Esporte</title>
+    
+    <!--
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+-->
+    <link rel="stylesheet" href="{% static 'ConectaEsporte/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'ConectaEsporte/css/visual.css' %}">
+
+</head>
+
+
+<body>
+  <!-- nav bar-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <!-- logo -->
+  <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" alt="" style="width: 8em;height: 2.75em;"></a>
+  
+  <!-- botão menu para celular -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- abas de navegação -->
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" > Página principal </a>
+      <a class="nav-item nav-link" >Feed</a>
+      <a class="nav-item nav-link" >Mapa</a>
+    </div>
+
+  <!-- botões de login -->
+    <div class = "login">
+      <a href="{% url 'secundarios:login' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Entrar</a>
+      <a href="{% url 'secundarios:criaConta' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Cadastre-se</a>
+    </div>
+
+    
+  </div>
+</nav>
+
+
+<div class="dropdown">
+    <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+        <div id="myDropdown" class="dropdown-content">
+            <h4>Filtros</h4>
+            <t>Custo</t>
+            <select name="custo" id="custo">
+                <option value="baixo">Baixo</option>
+                <option value="medio">Médio</option>
+                <option value="alto">Alto</option>
+            </select>
+            <br>
+            <h4>Região</h4>
+            <form >
+                <input placeholder="'Seu bairro'">
+                <button type="submit">Search</button>
+            </form>
+            
+        </div>
+</div>
+    <form >
+        <input type="search" placeholder="Search">
+        <button type="submit">Search</button>
+    </form>
+
+
+<h1>Locais</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="search" placeholder="Buscar carro..." value="{{ search_query }}">
+        <button type="submit">Buscar</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>MPG</th>
+                <th>Cilindros</th>
+                <th>Disposição</th>
+                <th>Potência</th>
+                <th>Peso</th>
+                <th>Aceleração</th>
+                <th>Câmbio</th>
+                <th>Marchas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carro in carros %}
+            <tr>
+                <td>{{ carro.name }}</td>
+                <td>{{ carro.mpg }}</td>
+                <td>{{ carro.cyl }}</td>
+                <td>{{ carro.disp }}</td>
+                <td>{{ carro.hp }}</td>
+                <td>{{ carro.wt }}</td>
+                <td>{{ carro.qsec }}</td>
+                <td>{{ carro.am }}</td>
+                <td>{{ carro.gear }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9">Nenhum carro encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    
+</body>
+</html>

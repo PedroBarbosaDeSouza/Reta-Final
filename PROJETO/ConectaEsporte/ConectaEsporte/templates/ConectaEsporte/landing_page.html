@@ -72,10 +72,20 @@
         </div>
       </div>
 
+      <!-- barra de busca 
   <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
+-->
+
+  <form >
+    <input type="search" placeholder="Search">
+    <button type="submit">Search</button>
+  </form>
+
+
+  <a href="{% url 'secundarios:busca' %}"><img src="{% static 'secundarios/img/lupa.png' %}" alt="Lupa" style="width:3em;height:3em;"></a>
 
   
 </div>

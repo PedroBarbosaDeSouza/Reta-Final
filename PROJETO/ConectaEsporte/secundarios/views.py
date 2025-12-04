@@ -40,6 +40,9 @@ def post_view(request):
 def chats_view(request):
     return render(request, 'secundarios/chats.html')
 
+def busca_view(request):
+    return render(request, 'secundarios/busca.html')
+
 #@login_required
 def perfil_view(request):
     user = request.user
