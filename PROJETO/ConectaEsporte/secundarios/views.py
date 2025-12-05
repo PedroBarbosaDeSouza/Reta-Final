@@ -4,7 +4,8 @@ from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Q, Count
-from .models import Place, Post, Resposta, SearchLog
+from .models import Place
+#,Post, Resposta, SearchLog
 
 # Views de cada página secundária
 def criaConta_view(request):
