@@ -41,6 +41,7 @@ def post_view(request):
 def chats_view(request):
     return render(request, 'secundarios/chats.html')
 
+@login_required(login_url='/secundarios/login/')
 def busca_view(request):
     return render(request, 'secundarios/busca.html')
 
@@ -56,8 +57,7 @@ def perfil_view(request):
     posts_count = Post.objects.filter(autor=user).count()
 
     respostas_count = Resposta.objects.filter(autor=user).count()
-
-# Esses valores são só um palpite do que poderia ser as metas
+    
     META_TIPOS = 10
     META_POSTS = 5
     META_RESPOSTAS = 20

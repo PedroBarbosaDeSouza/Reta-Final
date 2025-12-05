@@ -82,7 +82,6 @@ TEMPLATES = [
 ]
 
 
-
 WSGI_APPLICATION = "ConectaEsporte.wsgi.application"
 
 
