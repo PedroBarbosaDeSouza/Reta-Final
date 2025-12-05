@@ -10,19 +10,20 @@
 <body>
     <div class="container">
         <h1>Crie sua Conta</h1>
-        <form id="signup-form">
-            <label for="username">Nome de Usuário</label>
-            <input type="text" id="username" name="username">
+        <form id="signup-form" method="POST" action="{% url 'secundarios:criaConta' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <label for="{{ form.username.id_for_label }}">Nome de Usuário</label>
+            {{ form.username}}
 
-            <label for="email">E-mail</label>
-            <input type="text" id="email" name="email">
+            <label for="{{ form.email.id_for_label }}">E-mail</label>
+            {{ form.email }}
 
-            <label for="password">Senha</label>
-            <input type="text" id="password" name="password">
+            <label for="{{ form.senha1.id_for_label }}">Senha</label>
+            {{ form.senha1 }}
 
-            <label for="confirm-password">Confirmar Senha</label>
-            <input type="password" id="confirm-password" name="confirm-password">
-
+            <label for="{{ form.senha2.id_for_label }}">Confirmar Senha</label>
+            {{ form.senha2 }}
             <!-- consentimento para geolocalização -->
             <div class="geo-consent">
                 <input type="checkbox" id="geo-consent" name="geo-consent" value="yes" />
@@ -36,6 +37,6 @@
             <div class="error" id="error-message"></div>
         </form>
     </div>
-    <script src="{% static 'js/criaConta.js' %}"></script>
+    <script src="{% static 'secundarios/js/criaConta.js' %}"></script>
 </body>
 </html>

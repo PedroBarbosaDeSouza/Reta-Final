@@ -31,7 +31,7 @@
 
     <div class="navbar-nav">
       <a class="nav-item nav-link active" > Página principal </a>
-      <a class="nav-item nav-link" >Feed</a>
+      <a class="nav-item nav-link" href="{% url 'secundarios:feed' %}">Feed</a>
       <a class="nav-item nav-link" href="{% url 'secundarios:mapa' %}">Mapa</a>
     </div>
 
@@ -63,7 +63,7 @@
           Dropdown button
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="{% url 'secundarios:perfil' %}">Perfil</a>
           <a class="dropdown-item" href="#">Another action</a>
           <a class="dropdown-item" href="#">Something else here</a>
         </div>

@@ -1,4 +1,160 @@
+function normalizeText(s) {
+  s = (s || '').toString();
+  // remove acentos, lower, remove chars estranhos, compacta espaços
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+          .replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function tokens(s) {
+  const n = normalizeText(s);
+  if (!n) return [];
+  return n.split(' ').filter(Boolean);
+}
+
+/* Levenshtein simples (iterativo) */
+function levenshtein(a, b) {
+  a = (a||''); b = (b||'');
+  if (a === b) return 0;
+  const m = a.length, n = b.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  let v0 = Array.from({length: n+1}, (_,i)=>i);
+  let v1 = new Array(n+1);
+  for (let i=0;i<m;i++){
+    v1[0] = i+1;
+    for (let j=0;j<n;j++){
+      const cost = a[i] === b[j] ? 0 : 1;
+      v1[j+1] = Math.min(v1[j] + 1, v0[j+1] + 1, v0[j] + cost);
+    }
+    [v0,v1] = [v1,v0];
+  }
+  return v0[n];
+}
+
+// Pega duas strings e vê p quão semelhantes elas são (0 a 1)
+function similarity(a,b){
+  if (!a && !b) return 1;
+  if (!a || !b) return 0;
+  const dist = levenshtein(a,b);
+  const maxLen = Math.max(a.length, b.length);
+  if (maxLen === 0) return 1;
+  return 1 - (dist / maxLen);
+}
+
+// Constrói a lista de esportes normalizados
+function buildNormalizedSports(sportMap) {
+  return sportMap.map(item => {
+    const value = item.value;
+    const keys = (item.keys||[]).map(k => normalizeText(k));
+    // incluir o próprio nome canônico como alternativa
+    keys.push(normalizeText(value));
+    // tokens do nome canônico (ex: "table_tennis" -> ["table","tennis"])
+    keys.push(...normalizeText(value).split(' '));
+    // dedupe
+    const uniq = Array.from(new Set(keys.filter(Boolean)));
+    return { value, keys: uniq };
+  });
+}
+
+// Busca principal
+function matchSport(query, normalizedSports) {
+  const q = normalizeText(query);
+  if (!q) return null;
+
+  // remover stopwords antes (opcional)
+  const STOPWORDS = new Set(['e','de','do','da','dos','das','em','no','na','nos','nas','um','uma','uns','umas','para','por','com','sem','ao','aos','à','às','quadra','campo','quadras','campos','esporte','esportes']);
+  const qNoStop = q.split(' ').filter(t => !STOPWORDS.has(t)).join(' ') || q;
+
+  // 1) exact match (a chave inteira corresponde)
+  for (const m of normalizedSports) {
+    if (m.keys.includes(qNoStop)) return m.value;
+  }
+
+  // 2) substring (ex: "campo de futebol" contém "futebol")
+  for (const m of normalizedSports) {
+    if (m.keys.some(k => qNoStop.includes(k))) return m.value;
+  }
+
+  // 3) token match (alguma palavra bate)
+  const toks = qNoStop.split(' ').filter(Boolean);
+  for (const m of normalizedSports) {
+    if (m.keys.some(k => toks.includes(k))) return m.value;
+  }
+
+  // 4) fuzzy: similaridade máxima entre query e cada key
+  let best = {value: null, score: 0};
+  for (const m of normalizedSports) {
+    for (const k of m.keys) {
+      const sim = similarity(qNoStop, k);
+      if (sim > best.score) { best = {value: m.value, score: sim}; }
+    }
+  }
+  // limiar empírico: 0.55 — ajuste se quiser mais/menos permissivo
+  return best.score >= 0.55 ? best.value : null;
+}
+
+const STOPWORDS = new Set(['e','de','do','da','dos','das','em','no','na','nos','nas','um','uma','uns','umas','para','por','com','sem',
+    'ao','aos','à','às','quadra','campo','quadras','campos','esporte','esportes','público','publico','privado','privada','centro','centros',
+    'esportivo','esportiva','esportivos','esportivas','clube','clubes','associação','associacao','sociedade','sociedades']);
+
+function removeStopwords(s){
+    return s.split(' ').filter(t=>!STOPWORDS.has(t)).join(' ');
+}
+
+const SPORT_MAP = [{ keys: ['tênis', 'tenis','quadra de tenis','quadra de tênis'], value: 'tennis' },
+                { keys: ['basquete', 'basquetebol', 'basket','quadra de basquete'], value: 'basketball' },
+                { keys: ['futebol', 'futsal', 'soccer', 'football','campo de futebol'], value: 'football' },
+                { keys: ['voleibol', 'volei','quadra de volei'], value: 'volleyball' },
+                { keys: ['atletismo'], value: 'athletics' },
+                { keys: ['badminton'], value: 'badminton' },
+                { keys: ['natacao', 'natação'], value: 'swimming' },
+                { keys: ['basquete 3x3'], value: '3x3_basketball' },
+                { keys: ['boxe'], value: 'boxing' },
+                { keys: ['breaking','breakdance'], value: 'breaking' },
+                { keys: ['canoagem de velocidade'], value: 'canoe_sprint' },
+                { keys: ['canoagem slalom','canoagem'], value: 'canoe_slalom' },
+                { keys: ['ciclismo bmx freestyle','ciclissmo freestyle','ciclismo bmx'], value: 'bmx_freestyle' },
+                { keys: ['ciclismo bmx racing','ciclismo racing'], value: 'bmx_racing' },
+                { keys: ['ciclismo de estrada','ciclismo estrada','ciclismo'], value: 'road_cycling' },
+                { keys: ['ciclismo de pista','ciclismo pista'], value: 'track_cycling' },
+                { keys: ['ciclismo mountain bike','ciclismo mtb','mountain bike'], value: 'mountain_biking' },
+                { keys: ['escalada','escalada esportiva'], value: 'sport_climbing' },
+                { keys: ['esgrima'], value: 'fencing' },
+                { keys: ['ginastica artistica'], value: 'artistic_gymnastics' },
+                { keys: ['ginastica de trampolim','ginastica trampolim'], value: 'trampoline_gymnastics' },
+                { keys: ['ginastica ritmica'], value: 'rhythmic_gymnastics' },
+                { keys: ['golfe'], value: 'golf' },
+                { keys: ['handebol','handball','quadra de handebol'], value: 'handball' },
+                { keys: ['hipismo salto','hipismo'], value: 'equestrian_jumping' },
+                { keys: ['hóquei sobre grama','hockey sobre grama','hóquei grama','hockey grama'], value: 'field_hockey' },
+                { keys: ['judô','judo'], value: 'judo' },
+                { keys: ['jiu-jitsu','jiu jitsu'], value: 'jujitsu' },
+                { keys: ['karatê','karate'], value: 'karate' },
+                { keys: ['levantamento de peso','levantamento peso','levantamento'], value: 'weightlifting' },
+                { keys: ['luta olímpica','luta olimpica','luta'], value: 'wrestling' },
+                { keys: ['maratona aquatica','maratona aquática'], value: 'marathon_swimming' },
+                { keys: ['nado artístico','nado artistico'], value: 'artistic_swimming' },
+                { keys: ['natacao', 'natação'], value: 'swimming' },
+                { keys: ['pentatlo moderno','pentatlo'], value: 'modern_pentathlon' },
+                { keys: ['polo aquático','polo aquatico'], value: 'water_polo' },
+                { keys: ['remo'], value: 'rowing' },
+                { keys: ['rugby sevens','rugby 7s','rugby'], value: 'rugby_sevens' },
+                { keys: ['saltos ornamentais','salto ornamental'], value: 'diving' },
+                { keys: ['skateboarding','skate'], value: 'skateboarding' },
+                { keys: ['surfe','surf'], value: 'surfing' },
+                { keys: ['taekwondo'], value: 'taekwondo' },
+                { keys: ['tenismo de mesa','tenis de mesa','ping pong'], value: 'table_tennis' },
+                { keys: ['tiro com arco','tiro arco'], value: 'archery' },
+                { keys: ['tiro esportivo','tiro'], value: 'shooting' },
+                { keys: ['triatlo'], value: 'triathlon' },
+                { keys: ['vela'], value: 'sailing' },
+                { keys: ['voleibol de praia','volei de praia'], value: 'beach_volleyball' }
+            ];
+const SPORT_MAP_NORM = buildNormalizedSports(SPORT_MAP);
+
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("Mapa carregou!");
+    console.log("normalizeText:", normalizeText("TÊNIS"));
         const OVERPASS_ENDPOINTS = [
             'https://overpass-api.de/api/interpreter',
             'https://lz4.overpass-api.de/api/interpreter',
@@ -22,29 +178,22 @@ document.addEventListener('DOMContentLoaded', function () {
         const searchBtn = document.getElementById('searchBtn');
         const clearBtn = document.getElementById('clearBtn');
         const resultsEl = document.getElementById('results'); // mantido, mas não será usado para listar
+        const NORMALIZED_SPORTS = buildNormalizedSports(SPORT_MAP);
 
-        function parseQueryToFilters(q) {
-            const text = (q || '').toLowerCase();
-            const filters = [];
-            const sportMap = [
-                { keys: ['tênis', 'tenis'], value: 'tennis' },
-                { keys: ['basquete', 'basquetebol', 'basket'], value: 'basketball' },
-                { keys: ['futebol', 'futsal', 'soccer', 'football'], value: 'football' },
-                { keys: ['voleibol', 'volei'], value: 'volleyball' }
-            ];
-            let detectedSport = null;
-            for (const m of sportMap) if (m.keys.some(k => text.includes(k))) { detectedSport = m.value; break; }
+          function parseQueryToFilters(q) {
+    const detected = matchSport(q, SPORT_MAP_NORM);
+    const filters = [];
+    if (detected) {
+      filters.push(`["leisure"="pitch"]["sport"="${detected}"]`);
+      filters.push(`["amenity"="sports_centre"]["sport"="${detected}"]`);
+      filters.push(`["sport"="${detected}"]`);
+    } else {
+      filters.push(`["leisure"="pitch"]`);
+      filters.push(`["amenity"="sports_centre"]`);
+    }
+    return filters;
+    }
 
-            if (detectedSport) {
-                filters.push(`["leisure"="pitch"]["sport"="${detectedSport}"]`);
-                filters.push(`["amenity"="sports_centre"]["sport"="${detectedSport}"]`);
-                filters.push(`["sport"="${detectedSport}"]`);
-            } else {
-                filters.push(`["leisure"="pitch"]`);
-                filters.push(`["amenity"="sports_centre"]`);
-            }
-            return filters;
-        }
 
         function buildOverpassQL(filters, bbox) {
             let blocks = '';

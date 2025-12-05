@@ -40,7 +40,7 @@ def post_view(request):
 def chats_view(request):
     return render(request, 'secundarios/chats.html')
 
-#@login_required
+@login_required(login_url='/secundarios/login/')
 def perfil_view(request):
     user = request.user
 
@@ -51,7 +51,7 @@ def perfil_view(request):
 
     posts_count = Post.objects.filter(autor=user).count()
 
-    respostas_count = Resposta.oobjects.filter(autor=user).count()
+    respostas_count = Resposta.objects.filter(autor=user).count()
     
     META_TIPOS = 10
     META_POSTS = 5
