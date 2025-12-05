@@ -1,13 +1,16 @@
 /* ===== Navbar base ===== */
 .navbar {
-  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+
   padding: 0.5rem 1rem;
   background-color: #f8f9fa; /* cor clara padrão */
+  width: 100%;
 }
+
+  
+
 
 /* ===== Container interno ===== */
 /*
@@ -25,17 +28,9 @@
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-right: 1rem;
-  font-size: 1.25rem;
-  color: rgba(0, 0, 0, 0.9);
-  text-decoration: none;
-  white-space: nowrap;
+ 
 }
 
-.navbar-brand:hover,
-.navbar-brand:focus {
-  color: rgba(0, 0, 0, 0.7);
-  text-decoration: none;
-}
 
 /* ===== Navegação ===== */
 .navbar-nav {
@@ -120,18 +115,12 @@
   }
 }
 
-/* ===== Tema escuro opcional ===== */
-.navbar-dark {
-  background-color: #212529;
-}
 
-.navbar-dark .navbar-brand,
-.navbar-dark .nav-link,
-.navbar-dark .navbar-text {
-  color: rgba(255, 255, 255, 0.55);
-}
 
-.navbar-dark .navbar-brand:hover,
-.navbar-dark .nav-link:hover {
-  color: rgba(255, 255, 255, 0.75);
+.login
+{
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }

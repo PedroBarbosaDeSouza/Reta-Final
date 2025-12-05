@@ -16,18 +16,16 @@
 
 <body>
   <!-- nav bar-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg">
 
   <!-- logo -->
   <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" alt="" style="width: 8em;height: 2.75em;"></a>
   
   <!-- botão menu para celular -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+ 
 
   <!-- abas de navegação -->
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
 
     <div class="navbar-nav">
       <a class="nav-item nav-link active" > Página principal </a>
@@ -69,10 +67,20 @@
         </div>
       </div>
 
+      <!-- barra de busca 
   <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
   </form>
+-->
+
+  <form >
+    <input type="search" placeholder="Search">
+    <button type="submit">Search</button>
+  </form>
+
+
+  <a href="{% url 'secundarios:busca' %}"><img src="{% static 'secundarios/img/lupa.png' %}" alt="Lupa" style="width:3em;height:3em;"></a>
 
   
 </div>

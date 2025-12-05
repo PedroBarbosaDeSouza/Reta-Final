@@ -25,8 +25,14 @@ SECRET_KEY = "django-insecure-+yigt&vq7fcvu_5+@h06!%wb2v(@&wv#)%sxg57+vd64=db1kn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost:8000', 
+    'http://localhost:8000',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -75,12 +81,6 @@ TEMPLATES = [
     },
 ]
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "https://localhost:8000",
-    "http://127.0.0.1:8000",
-    "https://127.0.0.1:8000",
-]
 
 WSGI_APPLICATION = "ConectaEsporte.wsgi.application"
 
@@ -94,16 +94,8 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
 #PARTE DE AUTENTICAÇÃO DE USUÁRIO
-AUTH_USER_MODEL = 'secundarios.User'
-
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = 'login'  
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'pedrobsouza12@gmail.com'  #Botei esse email só pra ter algum   
-
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -138,12 +130,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "/static/"
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+LOGOUT_REDIRECT_URL = '/accounts/login/'  # Para onde vai após logout
+LOGIN_URL = '/accounts/login/'       # URL de login (padrão)
+# ATENÇÃO!!! Troque o valor da variável abaixo para que ela seja uma das rotas
+# válidas no seu arquivo MeuSite/curriculo/urls.py
+# LOGIN_REDIRECT_URL = '/curriculo/spiff/'   # Para onde vai após login
+LOGIN_REDIRECT_URL = '/secundario/home_conta/'   # Para onde vai após login
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #TIRAR ESSES SÓ QUANDO O SITE FOR A PÚBLICO
 #CSRF_COOKIE_SECURE = True
