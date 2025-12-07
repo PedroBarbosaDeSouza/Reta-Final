@@ -11,8 +11,13 @@
 -->
     <link rel="stylesheet" href="{% static 'secundarios/css/nav.css' %}">
     <link rel="stylesheet" href="{% static 'secundarios/css/visual.css' %}">
+    <link rel="stylesheet" href="{% static 'secundarios/css/feed.css' %}">
 
 </head>
+
+
+
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
@@ -55,52 +60,38 @@
     
   </div>
 </nav>
+<div class="corpo">
+  
+    <h1>Novidades</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="search" placeholder="Buscar post..." value="{{ search_query }}">
+        <button type="submit">Buscar</button>
+    </form>
 
 
 
-<body>
-    <t>Novidades</t>
-    <div class="feed">
-
-        <a href="{% url 'secundarios:post' %}">
-          <div class="c2">
-              <div>
-                  <img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" style="width:42px;height:42px;">
-                  <t>op</t>
-              </div>
-              <div>
-                  <div>
-                      <h1>Titulo</h1>
-                  </div>
-                  <div>
-                      <t>texto</t>
-                  </div>
-              </div>
+      <div class="feed">
+        {% for post in posts %}
+          <div class="c2" style="margin-bottom: 24px; border: 1px solid #ccc; padding: 16px;">
+            <div>
+              <img src="{% static '/secundarios/img/icon_perfil.png' %}" style="width:42px;height:42px;"> {{ post.autor }}
+            </div>
+            <div>
+              <h3>{{ post.titulo|escape }}</h3>
+              <p>{{ post.conteudo|linebreaksbr }}</p>
+            </div>
+            <small>Publicado em {{ post.criado_em|date:"d/m/Y H:i" }}</small>
           </div>
-        </a>
-
-        <a href="{% url 'secundarios:post' %}">
-          <div class="c2">
-              <div>
-                  <img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" style="width:42px;height:42px;">
-                  <t>op</t>
-              </div>
-              <div>
-                  <div>
-                      <h1>Titulo</h1>
-                  </div>
-                  <div>
-                      <t>texto</t>
-                  </div>
-              </div>
-          </div>
-        </a>
-
-
-    </div>
+        {% empty %}
+          <p>Não há postagens cadastradas.</p>
+        {% endfor %}
+      </div>
 
 
 
+</div> 
 </body>
 
 <footer>

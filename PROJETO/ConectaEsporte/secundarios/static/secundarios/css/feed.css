@@ -1,0 +1,20 @@
+.corpo
+{
+    margin-left: 15%;
+    margin-right: 15%;
+    border: 1px solid #000000;
+}
+
+.feed
+{
+    margin-left: 5%;
+    border: 1px solid #000000;
+
+}
+
+.c2
+{
+    display: flex;
+    border: 1px solid #000000;
+
+}

@@ -18,5 +18,6 @@ urlpatterns = [
     path('api/places/', views.places_api, name='places_api'),
     path('perfil/', views.perfil_view, name='perfil'),
     path('chats/', views.chats_view, name='chats'),
-    path('busca/', views.busca_view, name='busca'),
+    path("", views.searchf, name="busca"),
+    
 ]

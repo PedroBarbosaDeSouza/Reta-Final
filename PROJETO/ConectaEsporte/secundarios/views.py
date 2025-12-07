@@ -4,8 +4,7 @@ from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Q, Count
-from .models import Place
-#,Post, Resposta, SearchLog
+from .models import Place, Post
 
 
 def criaConta_view(request):
@@ -20,8 +19,27 @@ def criaConta_view(request):
     return render(request, 'secundarios/criaConta.html', {'form': form})
 
 def feed_view(request):
-    #posts = Post.objects.select_related('autor').all()
-    return render(request, 'secundarios/feed.html')#, {'posts': posts})
+    posts = Post.objects.all().order_by('-criado_em')
+    return render(request, 'secundarios/feed.html', {'posts': posts})
+
+def searchf(request):
+    if request.method == 'GET':
+        return render(request, 'feed.html')
+    else:
+        search_query = request.POST.get('search')
+        # Aqui você pode adicionar a lógica para filtrar os carros com base na pesquisa
+        post = secundarios.objects.filter(name__icontains=search_query)
+        # contexto é uma variável do tipo dicionário 
+        # que armazena os dados a serem enviados para o template.
+        # No template, você pode acessar esses dados usando as chaves do dicionário.
+        contexto = {
+            'search_query': search_query,   # o texto pesquisado
+            'post': post                # os resultados da pesquisa
+        }
+        # No meu caso, eu mostro a mesma página,
+        # mas você pode usar outro template para mostrar uma página diferente.
+        # Basta trocar o nome do arquivo HTML no parâmetro da função render a seguir.
+        return render(request, 'feed.html', contexto)
 
 @login_required
 def home_conta_view(request):
