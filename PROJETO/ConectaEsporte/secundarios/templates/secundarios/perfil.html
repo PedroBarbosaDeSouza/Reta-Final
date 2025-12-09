@@ -1,52 +1,213 @@
-{% extends 'secundarios/home_conta.html' %}
-{% block content %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
 
+    <link rel="stylesheet" href="{% static 'secundarios/css/perfil.css' %}">
+    <link rel="stylesheet" href="{% static 'secundarios/css/post.css' %}">
+    
 
-<div class ="container mt-4">
-    <h2>Meu Perfil - Progresso</h2>
-
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Áreas pesquisadas</h5>
-            <p class="card-text">Tipos de esportes pesquisados: <strong>{{ tipos_count }}</strong> (meta: {{ META_TIPOS }})</p>
-            <div class="progress" style="height: 22px;">
-                <div class="progress-bar" role="progressbar" style="width: {{ pct_tipos }}%;" aria-valuenow="{{ pct_tipos }}" aria-valuemin="0" aria-valuemax="100">
-                    {{ pct_tipos }}%
-                </div>
+</head>
+<body>
+{% include 'secundarios/nav_log.html' %}
+<div class="corpo">
+<div class="espaço-perfil">
+    <div class="main-perfil">
+        <div class="user">    
+            <img src="{% static 'secundarios/img/icon_perfil.png' %}" alt="Foto de Perfil" style="width:70px;height:70px;">
+            <div class="detalhes-usuario">
+            <p>Nome do Usuário</p>
+            <p>Bio do usuário: Apaixonado por esportes e atividades ao ar livre.</p>
             </div>
-            <small class="text-muted">Total de buscas: {{ buscas_totais }}</small>
+        </div>
+        <div class="info-adicional">
+            <p><strong>Seguidores:</strong> </p>
+            <p>123</p>
+            <p><strong>Seguindo:</strong> </p>
+            <p>321</p>
+            <p><strong>Desafios no mês:</strong></p>
+            <p>13</p>
         </div>
     </div>
+</div>
+<h1>Seu Perfil</h1>
+<div class="posts-usuario">
+    <!-- -->
+    <div >
+      <a href="{% url 'secundarios:post' %}">
+        <div class="c1">
+          <!-- Header: ícone + nome OP -->
+          <div class="c1-header">
+            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
+            <h1 class="op">OP</h1>
+          </div>
 
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Posts criados</h5>
-            <p class="card-text">Você publicou <strong>{{ posts_count }}</strong> posts (meta: {{ META_POSTS }})</p>
-            <div class="progress" style="height: 22px;">
-                <div class="progress-bar bg-success" role="progressbar" style="width: {{ pct_posts }}%;" aria-valuenow="{{ pct_posts }}" aria-valuemin="0" aria-valuemax="100">
-                    {{ pct_posts }}%
-                </div>
+          <!-- Body: imagem + conteúdo -->
+          <div class="c1-body">
+            <!-- Imagem do post (lado esquerdo) -->
+            <div class="c1-image">
+              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
             </div>
-             <p><a href="{% url 'secundarios:feed' %}">Ver meu feed</a></p>
+
+            <!-- Conteúdo (lado direito) -->
+            <div class="c1-content">
+              <h1>Titulo do Post</h1>
+              <t>tag1</t>
+              <t>Descrição breve do post</t>
+            </div>
+          </div>
         </div>
+      </a>
+      
+      <a href="{% url 'secundarios:post' %}">
+        <div class="c1">
+          <!-- Header: ícone + nome OP -->
+          <div class="c1-header">
+            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
+            <h1 class="op">OP</h1>
+          </div>
+
+          <!-- Body: imagem + conteúdo -->
+          <div class="c1-body">
+            <!-- Imagem do post (lado esquerdo) -->
+            <div class="c1-image">
+              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
+            </div>
+
+            <!-- Conteúdo (lado direito) -->
+            <div class="c1-content">
+              <h1>Titulo do Post</h1>
+              <t>tag1</t>
+           
+              <t>Descrição breve do post</t>
+            </div>
+          </div>
+        </div>
+
+      </a>
+
+             
+
+    </div>
+            
+<!-- -->
+    <div>
+      <a href="{% url 'secundarios:post' %}">
+        <div class="c1">
+          <!-- Header: ícone + nome OP -->
+          <div class="c1-header">
+            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
+            <h1 class="op">OP</h1>
+          </div>
+
+          <!-- Body: imagem + conteúdo -->
+          <div class="c1-body">
+            <!-- Imagem do post (lado esquerdo) -->
+            <div class="c1-image">
+              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
+            </div>
+
+            <!-- Conteúdo (lado direito) -->
+            <div class="c1-content">
+              <h1>Titulo do Post</h1>
+              <t>tag1</t>
+              <t>tag2</t>
+              <t>Descrição breve do post</t>
+            </div>
+          </div>
+        </div>
+      </a>
+      
+      <a href="{% url 'secundarios:post' %}">
+        <div class="c1">
+          <!-- Header: ícone + nome OP -->
+          <div class="c1-header">
+            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
+            <h1 class="op">OP</h1>
+          </div>
+
+          <!-- Body: imagem + conteúdo -->
+          <div class="c1-body">
+            <!-- Imagem do post (lado esquerdo) -->
+            <div class="c1-image">
+              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
+            </div>
+
+            <!-- Conteúdo (lado direito) -->
+            <div class="c1-content">
+              <h1>Titulo do Post</h1>
+              <t>tag1</t>
+            
+              <t>Descrição breve do post</t>
+            </div>
+          </div>
+        </div>
+      </a>
+
+
     </div>
 
-    <div class="card mb-3">
-        <div class="card-body">
-            <h5 class="card-title">Respostas feitas</h5>
-            <p class="card-text">Você respondeu <strong>{{ respostas_count }}</strong> vezes (meta: {{ META_RESPOSTAS }})</p>
-            <div class="progress" style="height: 22px;">
-                <div class="progress-bar bg-info" role="progressbar" style="width: {{ pct_respostas }}%;" aria-valuenow="{{ pct_respostas }}" aria-valuemin="0" aria-valuemax="100">
-                    {{ pct_respostas }}%
-                </div>
+<!-- -->
+    <div>
+        <a href="{% url 'secundarios:post' %}">
+          <div class="c1">
+          <!-- Header: ícone + nome OP -->
+          <div class="c1-header">
+            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
+            <h1 class="op">OP</h1>
+          </div>
+
+          <!-- Body: imagem + conteúdo -->
+          <div class="c1-body">
+            <!-- Imagem do post (lado esquerdo) -->
+            <div class="c1-image">
+              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
             </div>
-            <p><a href="{% url 'secundarios:feed' %}">Ver posts para responder</a></p>
+
+            <!-- Conteúdo (lado direito) -->
+            <div class="c1-content">
+              <h1>Titulo do Post</h1>
+              <t>tag1</t>
+          
+              <t>Descrição breve do post</t>
+            </div>
+          </div>
         </div>
+        </a>
+        
+        <a href="{% url 'secundarios:post' %}">
+          <div class="c1">
+          <!-- Header: ícone + nome OP -->
+          <div class="c1-header">
+            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
+            <h1 class="op">OP</h1>
+          </div>
+
+          <!-- Body: imagem + conteúdo -->
+          <div class="c1-body">
+            <!-- Imagem do post (lado esquerdo) -->
+            <div class="c1-image">
+              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
+            </div>
+
+            <!-- Conteúdo (lado direito) -->
+            <div class="c1-content">
+              <h1>Titulo do Post</h1>
+              <t>tag1</t>
+              
+              <t>Descrição breve do post</t>
+            </div>
+          </div>
+        </div>
+        </a>    
     </div>
+
 
 </div>
-{% endblock %}
 
-
-
+</div>
+</body>
+</html>

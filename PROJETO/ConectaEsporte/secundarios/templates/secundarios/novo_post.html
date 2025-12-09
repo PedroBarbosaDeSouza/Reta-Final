@@ -11,3 +11,59 @@
 
 <p><a href="{% url 'secundarios:feed' %}">&larr; Voltar ao Feed</a></p>
 {% endblock %}
+
+
+<!--
+
+{% block content %}
+{% load static %}
+
+
+<div class ="container mt-4">
+    <h2>Meu Perfil - Progresso</h2>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Áreas pesquisadas</h5>
+            <p class="card-text">Tipos de esportes pesquisados: <strong>{{ tipos_count }}</strong> (meta: {{ META_TIPOS }})</p>
+            <div class="progress" style="height: 22px;">
+                <div class="progress-bar" role="progressbar" style="width: {{ pct_tipos }}%;" aria-valuenow="{{ pct_tipos }}" aria-valuemin="0" aria-valuemax="100">
+                    {{ pct_tipos }}%
+                </div>
+            </div>
+            <small class="text-muted">Total de buscas: {{ buscas_totais }}</small>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Posts criados</h5>
+            <p class="card-text">Você publicou <strong>{{ posts_count }}</strong> posts (meta: {{ META_POSTS }})</p>
+            <div class="progress" style="height: 22px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ pct_posts }}%;" aria-valuenow="{{ pct_posts }}" aria-valuemin="0" aria-valuemax="100">
+                    {{ pct_posts }}%
+                </div>
+            </div>
+             <p><a href="{% url 'secundarios:feed' %}">Ver meu feed</a></p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Respostas feitas</h5>
+            <p class="card-text">Você respondeu <strong>{{ respostas_count }}</strong> vezes (meta: {{ META_RESPOSTAS }})</p>
+            <div class="progress" style="height: 22px;">
+                <div class="progress-bar bg-info" role="progressbar" style="width: {{ pct_respostas }}%;" aria-valuenow="{{ pct_respostas }}" aria-valuemin="0" aria-valuemax="100">
+                    {{ pct_respostas }}%
+                </div>
+            </div>
+            <p><a href="{% url 'secundarios:feed' %}">Ver posts para responder</a></p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+
+-->
