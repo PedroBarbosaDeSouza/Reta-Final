@@ -21,7 +21,7 @@
 
 /* dentro de visual.css */
 .main_busca form {
-  
+  width: 70%;
   display: flex;
   gap: 12px;
   align-items: center;
