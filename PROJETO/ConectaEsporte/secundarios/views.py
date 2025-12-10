@@ -72,7 +72,18 @@ def searchf(request):
 
 @login_required
 def home_conta_view(request):
-    return render(request, 'secundarios/home_conta.html')
+    # Mostrar as postagens recentes também na página principal do usuário
+    q = request.GET.get('q', '').strip()
+    posts = Post.objects.all()
+    if q:
+        from django.db.models import Q as _Q
+        posts = posts.filter(
+            _Q(titulo__icontains=q) |
+            _Q(tag__icontains=q) |
+            _Q(autor__icontains=q)
+        )
+    posts = posts.order_by('-criado_em')[:6]
+    return render(request, 'secundarios/home_conta.html', {'posts': posts, 'q': q})
 
 
 def mapa_view(request):

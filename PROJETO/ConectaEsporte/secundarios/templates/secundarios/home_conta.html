@@ -41,185 +41,43 @@
 
 </div>
 
+<div class="feed">
 
+  {% for post in posts %}
 
-<div class="novidade">
-<a class="t1" href="{% url 'secundarios:feed' %}">Novidades</a>
-  <div class="sugestao">
+  <a href="{% url 'secundarios:post' %}?id={{ post.id }}">
+  <div class="c1">
+    <div class="c1-header">
+      <img src="{% static 'secundarios/img/icon_perfil.png' %}">
+      <h1 class="op">{{ post.autor }}</h1>
+    </div>
+    <div class="c1-body">
+      <div class="c1-image">
+        <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
+      </div>
+      <div class="c1-content">
+        <h1>{{ post.titulo }}</h1>
+        <p>{{ post.tags }}</p>
+        <p>{{ post.conteudo|linebreaksbr }}</p>
+      </div>
 
-<!-- -->
-    <div >
-      <a href="{% url 'secundarios:post' %}">
-        <div class="c1">
-          <!-- Header: ícone + nome OP -->
-          <div class="c1-header">
-            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
-            <h1 class="op">OP</h1>
-          </div>
-
-          <!-- Body: imagem + conteúdo -->
-          <div class="c1-body">
-            <!-- Imagem do post (lado esquerdo) -->
-            <div class="c1-image">
-              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
-            </div>
-
-            <!-- Conteúdo (lado direito) -->
-            <div class="c1-content">
-              <h1>Titulo do Post</h1>
-              <t>tag1</t>
-              <t>Descrição breve do post</t>
-            </div>
-          </div>
-        </div>
-      </a>
       
-      <a href="{% url 'secundarios:post' %}">
-        <div class="c1">
-          <!-- Header: ícone + nome OP -->
-          <div class="c1-header">
-            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
-            <h1 class="op">OP</h1>
-          </div>
-
-          <!-- Body: imagem + conteúdo -->
-          <div class="c1-body">
-            <!-- Imagem do post (lado esquerdo) -->
-            <div class="c1-image">
-              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
-            </div>
-
-            <!-- Conteúdo (lado direito) -->
-            <div class="c1-content">
-              <h1>Titulo do Post</h1>
-              <t>tag1</t>
-           
-              <t>Descrição breve do post</t>
-            </div>
-          </div>
-        </div>
-
-      </a>
-
-             
-
-    </div>
-            
-<!-- -->
-    <div>
-      <a href="{% url 'secundarios:post' %}">
-        <div class="c1">
-          <!-- Header: ícone + nome OP -->
-          <div class="c1-header">
-            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
-            <h1 class="op">OP</h1>
-          </div>
-
-          <!-- Body: imagem + conteúdo -->
-          <div class="c1-body">
-            <!-- Imagem do post (lado esquerdo) -->
-            <div class="c1-image">
-              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
-            </div>
-
-            <!-- Conteúdo (lado direito) -->
-            <div class="c1-content">
-              <h1>Titulo do Post</h1>
-              <t>tag1</t>
-              <t>tag2</t>
-              <t>Descrição breve do post</t>
-            </div>
-          </div>
-        </div>
-      </a>
       
-      <a href="{% url 'secundarios:post' %}">
-        <div class="c1">
-          <!-- Header: ícone + nome OP -->
-          <div class="c1-header">
-            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
-            <h1 class="op">OP</h1>
-          </div>
-
-          <!-- Body: imagem + conteúdo -->
-          <div class="c1-body">
-            <!-- Imagem do post (lado esquerdo) -->
-            <div class="c1-image">
-              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
-            </div>
-
-            <!-- Conteúdo (lado direito) -->
-            <div class="c1-content">
-              <h1>Titulo do Post</h1>
-              <t>tag1</t>
-            
-              <t>Descrição breve do post</t>
-            </div>
-          </div>
-        </div>
-      </a>
-
-
+      <small>Publicado em {{ post.criado_em|date:"d/m/Y H:i" }}</small>
     </div>
-
-<!-- -->
-    <div>
-        <a href="{% url 'secundarios:post' %}">
-          <div class="c1">
-          <!-- Header: ícone + nome OP -->
-          <div class="c1-header">
-            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
-            <h1 class="op">OP</h1>
-          </div>
-
-          <!-- Body: imagem + conteúdo -->
-          <div class="c1-body">
-            <!-- Imagem do post (lado esquerdo) -->
-            <div class="c1-image">
-              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
-            </div>
-
-            <!-- Conteúdo (lado direito) -->
-            <div class="c1-content">
-              <h1>Titulo do Post</h1>
-              <t>tag1</t>
-          
-              <t>Descrição breve do post</t>
-            </div>
-          </div>
-        </div>
-        </a>
-        
-        <a href="{% url 'secundarios:post' %}">
-          <div class="c1">
-          <!-- Header: ícone + nome OP -->
-          <div class="c1-header">
-            <img src="{% static 'secundarios/img/icon_perfil.png' %}">
-            <h1 class="op">OP</h1>
-          </div>
-
-          <!-- Body: imagem + conteúdo -->
-          <div class="c1-body">
-            <!-- Imagem do post (lado esquerdo) -->
-            <div class="c1-image">
-              <img src="{% static 'secundarios/img/foto.png' %}" alt="Post">
-            </div>
-
-            <!-- Conteúdo (lado direito) -->
-            <div class="c1-content">
-              <h1>Titulo do Post</h1>
-              <t>tag1</t>
-              
-              <t>Descrição breve do post</t>
-            </div>
-          </div>
-        </div>
-        </a>    
-    </div>
-
-
+    
   </div>
+  </a>
+
+
+  {% empty %}
+      <p>Não há postagens cadastradas.</p>
+  {% endfor %}
+
 </div>
+
+
+
 
 </div> 
 

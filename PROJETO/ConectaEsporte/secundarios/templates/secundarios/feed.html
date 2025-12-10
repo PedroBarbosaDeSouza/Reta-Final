@@ -19,47 +19,8 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+{% include 'secundarios/nav_log.html' %}
 
-  <!-- logo -->
-  <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'ConectaEsporte/img/Logo_Proj.png' %}" alt="" style="width: 8em;height: 2.75em;"></a>
-
-  <!-- botão menu para telefone -->
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <!-- abas de navegação -->
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" > Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" >Features</a>
-      <a class="nav-item nav-link" >Pricing</a>
-      <a class="nav-item nav-link disabled">Disabled</a>
-      <!--  botão dropdown -->
-      <div class="dropdown">
-  
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
-    </div>
-
-  <!-- botões de login -->
-    <div class = "login">
-      <a href="{% url 'secundarios:login' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Entrar</a>
-      <a href="{% url 'secundarios:criaConta' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Cadastre-se</a>
-    </div>
-
-    
-  </div>
-</nav>
 <div class="corpo">
     <h2>Novidades</h2>
 
