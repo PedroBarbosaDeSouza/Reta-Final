@@ -21,11 +21,11 @@
 
   <!-- busca -->
 <div class="main_busca">
-  <form method="get" action="{% url 'secundarios:feed' %}" style="margin-bottom:12px;">
+  <form method="get" action="{% url 'secundarios:feedLog' %}" style="margin-bottom:12px;">
       <input type="text" name="q" placeholder="Buscar por título, conteúdo ou autor" value="{{ q|default:'' }}" />
       <button type="submit">Buscar</button>
       {% if q %}
-          <a href="{% url 'secundarios:feed' %}">Limpar</a>
+          <a href="{% url 'secundarios:feedLog' %}">Limpar</a>
       {% endif %}
   </form>
 
@@ -35,13 +35,13 @@
 <!-- botões páginas -->
 <div class= "botoes">
 
-    <a href="{% url 'secundarios:feed' %}"><img src="{% static 'secundarios/img/bot_comunidade.jpg' %}" alt="Comunidades" style="width:25em;height:25em; border-radius: 30px;"></a>
+    <a href="{% url 'secundarios:feedLog' %}"><img src="{% static 'secundarios/img/bot_comunidade.jpg' %}" alt="Comunidades" style="width:25em;height:25em; border-radius: 30px;"></a>
 
-    <a href="{% url 'secundarios:mapa' %}"><img src="{% static 'secundarios/img/bot_mapa.jpg' %}" alt="Locais" style="width:25em;height:25em; border-radius: 30px;"></a>
+    <a href="{% url 'secundarios:mapaLog' %}"><img src="{% static 'secundarios/img/bot_mapa.jpg' %}" alt="Locais" style="width:25em;height:25em; border-radius: 30px;"></a>
 
 </div>
 
-<a href="{% url 'secundarios:feed'}"><h1>Novidades</h1></a>
+<a href="{% url 'secundarios:feedLog' %}"><h1>Novidades</h1></a>
 <div class="feed">
 
   {% for post in posts %}

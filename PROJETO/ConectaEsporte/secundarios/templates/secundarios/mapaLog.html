@@ -1,8 +1,13 @@
-{% include 'secundarios/base.html' %}
+
 {% load static %}
-{% block title %}Mapa{% endblock %}
-{% block extra_head %}
-    <!-- usar CDN do Leaflet para garantir o CSS -->
+<!DOCTYPE html>
+<html lang="ptbr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa</title>
+
+     <!-- usar CDN do Leaflet para garantir o CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
     <style>
@@ -21,7 +26,11 @@
         .access-closed { color: #b02a37; font-weight:600; }
         .access-unknown { color: #6c757d; font-weight:600; }
     </style>
-{% endblock %}
+</head>
+<body>
+{% include 'secundarios/nav_log.html' %}
+   
+
 {% block content %}
         <h1>Procure quadras públicas</h1>
 
@@ -33,9 +42,12 @@
         <div class="info">Dica: posicione o mapa na área desejada antes de pesquisar — a busca usa os limites visíveis.</div>
         <div id="map" aria-label="Mapa do Brasil interativo"></div>
         <div class="results" id="results"></div> <!-- mantido oculto para compatibilidade -->
-    <footer>Busca via Overpass API (OpenStreetMap). Resultados públicos.</footer>
+    
 {% endblock %}
 {% block extra_js %}
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="{% static 'secundarios/js/mapa.js' %}?v=123"></script>
 {% endblock %}
+</body>
+</html>
+<footer>Busca via Overpass API (OpenStreetMap). Resultados públicos.</footer>

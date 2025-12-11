@@ -44,31 +44,61 @@ def feed_view(request):
                 # se SearchLog não existir, apenas ignore
                 pass
 
-    posts = posts.order_by('-criado_em')[:100]  # limitar a 100 resultados por segurança
+    posts = posts.order_by('-criado_em')[:30]  # limitar a 30 resultados por segurança
     return render(request, 'secundarios/feed.html', {'posts': posts, 'q': q})
 
 
+def feedLog_view(request):
+    """
+    Feed com busca por query string 'q'.
+    Exemplo: /feed/?q=futebol
+    Pesquisa em titulo, conteudo e autor (case-insensitive).
+    """
+    q = request.GET.get('q', '').strip()
+    posts = Post.objects.all()
 
+    if q:
+        posts = posts.filter(
+            Q(titulo__icontains=q) |
+            Q(tag__icontains=q) |
+            Q(autor__icontains=q)
+        )
+
+        # opcional: registrar busca se existir SearchLog (arquivo modelo pode não ter)
+        if request.user.is_authenticated and q:
+            try:
+                from .models import SearchLog
+                SearchLog.objects.create(usuario=request.user, termo=q or '', tipo='')
+            except Exception:
+                # se SearchLog não existir, apenas ignore
+                pass
+
+    posts = posts.order_by('-criado_em')[:30]  # limitar a 30 resultados por segurança
+    return render(request, 'secundarios/feedLog.html', {'posts': posts, 'q': q})
 
 
 def searchf(request):
     if request.method == 'GET':
-        return render(request, 'feed.html')
+        if user.is_authenticated:
+            return render(request, 'feedLog.html')
+        else:
+            return render(request, 'feed.html')
     else:
         search_query = request.POST.get('search')
-        # Aqui você pode adicionar a lógica para filtrar os carros com base na pesquisa
+    
         post = secundarios.objects.filter(name__icontains=search_query)
-        # contexto é uma variável do tipo dicionário 
-        # que armazena os dados a serem enviados para o template.
-        # No template, você pode acessar esses dados usando as chaves do dicionário.
+ 
         contexto = {
             'search_query': search_query,   # o texto pesquisado
             'posts': post                # os resultados da pesquisa
         }
-        # No meu caso, eu mostro a mesma página,
-        # mas você pode usar outro template para mostrar uma página diferente.
-        # Basta trocar o nome do arquivo HTML no parâmetro da função render a seguir.
-        return render(request, 'secundarios/feed.html', contexto)
+        if user.is_authenticated:
+            return render(request, 'secundarios/feedLog.html', contexto)
+        else:
+            return render(request, 'secundarios/feed.html', contexto)
+
+
+
 
 @login_required
 def home_conta_view(request):
@@ -89,6 +119,10 @@ def home_conta_view(request):
 def mapa_view(request):
     return render(request, 'secundarios/mapa.html')
 
+def mapaLog_view(request):
+    return render(request, 'secundarios/mapa.html')
+
+@login_required
 def post_view(request):
     """
     Exibe uma única postagem. Espera receber o id via query string: /post/?id=123
@@ -104,7 +138,7 @@ def post_view(request):
     # então por enquanto apenas renderizamos a postagem.
     return render(request, 'secundarios/post.html', {'post': post})
 
-
+@login_required
 def chats_view(request):
     return render(request, 'secundarios/chats.html')
 
@@ -116,71 +150,6 @@ def busca_view(request):
 def perfil_view(request):
      return render(request, 'secundarios/perfil.html')
 
-
-# def perfil_view(request):
-#     user = request.user
-
-#     tipos_distintos = SearchLog.objects.filter(usuario=user).exclude(tipo='').values_list('tipo', flat=True).distinct()
-#     tipos_count = tipos_distintos.count()
-
-#     buscas_totais = SearchLog.objects.filter(usuario=user).count()
-
-#     posts_count = Post.objects.filter(autor=user).count()
-
-#     respostas_count = Resposta.objects.filter(autor=user).count()
-    
-#     META_TIPOS = 10
-#     META_POSTS = 5
-#     META_RESPOSTAS = 20
-
-#     def pct(count, meta):
-#         if meta <= 0:
-#             return 0
-#         value = int((count / meta) * 100)
-#         return 100 if value > 100 else value
-    
-#     context = {
-#         'tipos_count': tipos_count,
-#         'buscas_totais': buscas_totais,
-#         'posts_count': posts_count,
-#         'respostas_count': respostas_count,
-#         'pct_tipos': pct(tipos_count, META_TIPOS),
-#         'pct_posts': pct(posts_count, META_POSTS),
-#         'pct_respostas': pct(respostas_count, META_RESPOSTAS),
-#         'META_TIPOS': META_TIPOS,
-#         'META_POSTS': META_POSTS,
-#         'META_RESPOSTAS': META_RESPOSTAS,
-#     }
-    
-#     return render(request, 'secundarios/perfil.html', context)
-
-
-
-# post_view não estava funcionando, então comentei por enquanto
-# def post_view(request, post_id):
-#     post = get_object_or_404(Post, id=post_id)
-#     respostas = post.respostas.select_related('autor').all()
-
-#     if request.method == 'POST':
-#         if not request.user.is_authenticated:
-#             return redirect('secundarios:login')
-#         conteudo = request.POST.get('conteudo')
-#         if conteudo:
-#             Resposta.objects.create(post=post, autor=request.user, conteudo=conteudo)
-#             return redirect('secundarios:post', post_id=post.id)
-#     return render(request, 'secundarios/post.html', {'post': post, 'respostas': respostas})
-
-# def novo_post_view(request):
-#     if request.method == 'POST':
-#         if not request.user.is_authenticated:
-#             return redirect('secundarios:login')
-#         titulo = request.POST.get('titulo')
-#         conteudo = request.POST.get('conteudo')
-
-#         if titulo and conteudo:
-#             post = Post.objects.create(autor=request.user, titulo=titulo, conteudo=conteudo)
-#             return redirect('secundarios:post', post_id=post.id)
-#     return render(request, 'secundarios/novo_post.html')
 
 def places_api(request):
     qs = Place.objects.filter(ativo=True)
