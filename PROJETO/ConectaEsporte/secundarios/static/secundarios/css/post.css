@@ -1,100 +1,82 @@
-/* Container principal de sugestão de post */
+/* Links - remover estilo */
+.feed a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Card principal */
 .c1 {
-	display: flex;
-	flex-direction: column;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	padding: 16px;
-	background-color: #ffffff;
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
 }
 
 .c1:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Header do container - ícone + nome (OP) */
+/* Autor e avatar */
 .c1-header {
-	display: flex;
-	align-items: center; /* mantém ícone e texto alinhados na mesma linha */
-	gap: 8px;
-	margin-bottom: 10px;
-	width: 100%;
-	flex-wrap: nowrap; /* evita quebra do header para nova linha */
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
 }
 
 .c1-header img {
-	width: 32px; /* reduzido para icones de perfil */
-	height: 32px;
-	object-fit: cover;
-	border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
-.c1-header h1 {
-	margin: 0;
-	font-size: 13px;
-	font-weight: 600;
-	color: #333;
+.c1-author {
+    font-weight: 700;
+    color: #222;
 }
 
-/* Body do container - conteúdo principal */
-.c1-body {
-	display: flex;
-	gap: 12px;
-	align-items: flex-start;
-}
-
-/* Imagem do post (lado esquerdo) */
-.c1-image {
-	flex-shrink: 0;
-}
-
-.c1-image img {
-	width: 80px;
-	height: 80px;
-	border-radius: 4px;
-	object-fit: cover;
-}
-
-/* Conteúdo (lado direito) */
+/* Conteúdo */
 .c1-content {
-	display: flex;
-	flex-direction: column;
-	gap: 6px;
-	flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
-.c1-content h1 {
-	margin: 0;
-	font-size: 16px;
-	font-weight: 600;
-	color: #222;
+.c1-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #0c2340;
 }
 
-.c1-content t {
-	display: inline-block;
-	font-size: 12px;
-	color: #666;
-	background-color: #f0f0f0;
-	padding: 2px 8px;
-	border-radius: 3px;
-	margin-right: 4px;
+.c1-text {
+    margin: 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
 }
 
-.c1-content > t:last-of-type {
-	margin-right: 0;
+/* Footer */
+.c1-footer {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.8rem;
+    color: #999;
 }
 
-.c1-content > div:last-child t {
-	display: block;
-	font-size: 14px;
-	color: #555;
-	background-color: transparent;
-	padding: 4px 0;
+.c1-tag {
+    background: #f0f0f0;
+    color: #666;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
 }
 
-/* Classe OP para o nome do usuário */
-.op {
-	font-weight: 600;
-	color: #0066cc;
+.no-posts {
+    text-align: center;
+    color: #999;
+    padding: 2rem;
 }

@@ -1,38 +1,116 @@
-.c2
-{
-    display: flex;
-    flex-direction: collumn;
-    display : grid;
-
-    height: 10em;
-    width: 90%;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: antiquewhite;
-    margin-left: 3%;
-    
+/* Remover estilo de link */
+.conversas a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.conteudo
-{
-    margin-left: 3%;
+.conversas a:visited {
+    color: inherit;
 }
 
-
-.c2-nome
-{
+/* Container de conversa */
+.c2 {
     display: flex;
     align-items: center;
-    
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.2s ease;
 }
 
-.conversas
-{
+.c2:hover {
+    background: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Conteúdo interno */
+.conteudo {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Nome do usuário (destaque principal) */
+.c2-nome {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.c2-nome img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #ddd;
+}
+
+.c2-nome h1 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #222;
+}
+
+/* Mensagem (menos destaque) */
+.conteudo > div:last-child {
+    margin: 0;
+}
+
+.conteudo p {
+    margin: 0;
+    color: #777;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    overflow: hidden;
+}
+
+/* Container de conversas */
+.corpo {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+}
+
+.conversas {
     display: flex;
     flex-direction: column;
-    marign: 0 auto;
-    width: 75em;
-    background-color: ghostwhite;
+    gap: 0.75rem;
+}
+
+/* Header */
+.header {
+    background: #0c2340;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .corpo {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .c2 {
+        padding: 0.75rem;
+    }
+
+    .c2-nome h1 {
+        font-size: 0.95rem;
+    }
+
+    .conteudo p {
+        font-size: 0.85rem;
+    }
 }
 
